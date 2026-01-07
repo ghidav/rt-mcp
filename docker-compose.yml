@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  rt-mcp:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      # Pass through RT configuration from host environment or .env file
+      - RT_URL=${RT_URL}
+      - RT_TOKEN=${RT_TOKEN}
+      - RT_USER=${RT_USER}
+      - RT_PASSWORD=${RT_PASSWORD}
+      - RT_VERIFY_SSL=${RT_VERIFY_SSL:-True}
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src # For development: mount src for live reloads (requires restart unless generic)
