@@ -151,7 +151,11 @@ async def update_ticket(
 
         result = await client.update_ticket(ticket_id, update_data)
         await ctx.info(f"✓ Updated ticket {ticket_id}")
-        return result
+        return {
+            "ticket_id": ticket_id,
+            "status": "success",
+            "raw_result": result  # This handles the list safely
+        }
 
     except RTError as e:
         await ctx.error(f"Failed to update ticket {ticket_id}: {e}")
